@@ -1,0 +1,67 @@
+<div class="flex justify-center items-center h-screen">
+    <button id="ps1"  class="m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      paslon 1
+    </button>
+    <button id="ps2"  class="m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      paslon 2
+    </button>
+    <button  id="ps3" class="m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      paslon 3
+    </button>
+
+</div>
+    <script src="/socket.io/socket.io.js"></script>
+
+<script>
+    const socket = io();
+    const paslon = document.getElementsByClassName('paslon');
+    function $id(id) {return document.getElementById(id);}
+    function btnDisable(idBtn) {
+        $id(idBtn).classList.remove('bg-blue-500');
+        $id(idBtn).classList.remove('hover:bg-blue-700');
+        $id(idBtn).classList.add('bg-blue-300');
+        $id(idBtn).disabled = true;
+    }
+    function btnEnable(idBtn) {
+        $id(idBtn).classList.add('bg-blue-500');
+        $id(idBtn).classList.add('hover:bg-blue-700');
+        $id(idBtn).classList.remove('bg-blue-300');
+        $id(idBtn).disabled = false;
+    }
+    $id('ps1').addEventListener('click', (e) => {
+        let data = [1,0,0]
+        socket.emit('vote', data);
+        btnDisable('ps1');
+        btnDisable('ps2');
+        btnDisable('ps3');
+        setTimeout(() => {
+            btnEnable('ps1');
+            btnEnable('ps2');
+            btnEnable('ps3');
+        }, 3000);
+    });
+    $id('ps2').addEventListener('click', (e) => {
+        let data = [0,1,0]
+        socket.emit('vote', data);
+        btnDisable('ps1');
+        btnDisable('ps2');
+        btnDisable('ps3');
+        setTimeout(() => {
+            btnEnable('ps1');
+            btnEnable('ps2');
+            btnEnable('ps3');
+        }, 3000);
+    });
+    $id('ps3').addEventListener('click', (e) => {
+        let data = [0,0,1]
+        socket.emit('vote', data);
+        btnDisable('ps1');
+        btnDisable('ps2');
+        btnDisable('ps3');
+        setTimeout(() => {
+            btnEnable('ps1');
+            btnEnable('ps2');
+            btnEnable('ps3');
+        }, 3000);
+    });
+</script>
